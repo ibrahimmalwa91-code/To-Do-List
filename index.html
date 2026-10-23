@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102a2a">
+  <meta name="description" content="قائمة مهام بسيطة لتنظيم يومك ومتابعة إنجازك.">
+  <title>يومي — قائمة المهام</title>
+  <link rel="stylesheet" href="Css/bootstrap.min.css">
+  <link rel="stylesheet" href="Css/all.min.css">
+  <link rel="stylesheet" href="Css/style.css">
+  
+  
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <nav class="topbar" aria-label="التنقل">
+        <a class="brand" href="#" aria-label="يومي - الرئيسية">
+          <span class="brand-mark"><i class="fa-solid fa-check"></i></span>
+          <span>يومي<span class="brand-dot">.</span></span>
+        </a>
+        <div class="top-actions">
+          <span class="today-chip"><i class="fa-regular fa-calendar"></i><span id="todayLabel">اليوم</span></span>
+          <button class="icon-button theme-toggle" id="themeToggle" type="button" aria-label="تبديل المظهر" title="تبديل المظهر">
+            <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.3A8.7 8.7 0 0 1 8.7 3.8 8.8 8.8 0 1 0 20.2 15.3Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </nav>
+
+      <div class="hero-content">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> مساحة هادئة لإنجاز أكثر</p>
+          <h1>خلّي يومك <span>على مزاجك.</span></h1>
+          <p class="hero-subtitle">رتّب أولوياتك، خطوة بخطوة. كل مهمة صغيرة بتقرّبك من هدفك.</p>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-number" id="heroTotal">0</span>
+              <span class="stat-label">إجمالي المهام</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+              <span class="stat-number" id="heroCompleted">0</span>
+              <span class="stat-label">مهام مكتملة</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat">
+              <span class="stat-number" id="heroRemaining">0</span>
+              <span class="stat-label">لسه متبقي</span>
+            </div>
+          </div>
+        </div>
+        <div class="progress-card">
+          <div class="progress-ring" id="progressRing" role="img" aria-label="نسبة الإنجاز 0 بالمئة">
+            <div class="ring-inner">
+              <strong id="progressPercent">0%</strong>
+              <span>إنجازك</span>
+            </div>
+          </div>
+          <p class="progress-message" id="progressMessage">البداية دايمًا بخطوة ✨</p>
+          <div class="progress-track"><div id="progressBar" class="progress-fill"></div></div>
+        </div>
+      </div>
+      <div class="hero-decoration decor-one"></div>
+      <div class="hero-decoration decor-two"></div>
+    </header>
+
+    <main class="main-content">
+      <section class="composer panel" aria-labelledby="addHeading">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">ابدأ من هنا</span>
+            <h2 id="addHeading">إيه اللي محتاج تعمله؟</h2>
+          </div>
+          <span class="heading-icon"><i class="fa-solid fa-pen-to-square"></i></span>
+        </div>
+        <form id="taskForm" class="task-form">
+          <label class="sr-only" for="taskInput">اسم المهمة</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-plus"></i>
+            <input id="taskInput" type="text" maxlength="140" placeholder="اكتب مهمة جديدة هنا..." autocomplete="off" required>
+          </div>
+          <label class="sr-only" for="taskPriority">الأولوية</label>
+          <select id="taskPriority" aria-label="أولوية المهمة">
+            <option value="normal">عادية</option>
+            <option value="high">مهمة</option>
+            <option value="urgent">عاجلة</option>
+          </select>
+          <label class="sr-only" for="taskDate">موعد المهمة</label>
+          <input id="taskDate" class="date-input" type="date" aria-label="موعد المهمة">
+          <button class="add-button" type="submit"><i class="fa-solid fa-plus"></i><span>إضافة مهمة</span></button>
+        </form>
+        <p class="form-hint"><i class="fa-regular fa-lightbulb"></i> نصيحة صغيرة: اكتب المهمة بشكل واضح عشان يسهل عليك تبدأ.</p>
+      </section>
+
+      <section class="tasks-section panel" aria-labelledby="tasksHeading">
+        <div class="tasks-topline">
+          <div>
+            <span class="section-kicker">قائمة اليوم</span>
+            <h2 id="tasksHeading">مهامك <span class="count-badge" id="visibleCount">0</span></h2>
+          </div>
+          <div class="search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" id="searchInput" placeholder="دور على مهمة..." aria-label="البحث في المهام">
+            <button id="clearSearch" class="clear-search" type="button" aria-label="مسح البحث" hidden><i class="fa-solid fa-xmark"></i></button>
+          </div>
+        </div>
+
+        <div class="filter-row" role="group" aria-label="تصفية المهام">
+          <button class="filter-button active" data-filter="all" type="button"><i class="fa-solid fa-layer-group"></i> الكل <span id="allCount">0</span></button>
+          <button class="filter-button" data-filter="active" type="button"><i class="fa-regular fa-circle"></i> النشطة <span id="activeCount">0</span></button>
+          <button class="filter-button" data-filter="completed" type="button"><i class="fa-regular fa-circle-check"></i> المكتملة <span id="completedCount">0</span></button>
+          <button class="filter-button" data-filter="today" type="button"><i class="fa-regular fa-calendar"></i> موعدها النهارده</button>
+        </div>
+
+        <div id="taskList" class="task-list" aria-live="polite"></div>
+        <div id="emptyState" class="empty-state">
+          <div class="empty-illustration"><i class="fa-solid fa-mug-hot"></i><span class="spark spark-a">✦</span><span class="spark spark-b">✧</span></div>
+          <h3 id="emptyTitle">لسه مفيش مهام هنا</h3>
+          <p id="emptyText">ابدأ بإضافة أول مهمة، وخلي يومك أخف وأسهل.</p>
+          <button id="emptyAddButton" type="button" class="text-button">إضافة أول مهمة <i class="fa-solid fa-arrow-up"></i></button>
+        </div>
+
+        <div class="list-footer">
+          <span><i class="fa-solid fa-wand-magic-sparkles"></i> التقدم مش لازم يكون سريع، المهم تكمّل.</span>
+          <button id="clearCompleted" class="clear-completed" type="button" disabled>مسح المهام المكتملة <i class="fa-regular fa-trash-can"></i></button>
+        </div>
+      </section>
+      <footer class="page-footer"><span>صُنع عشان يومك يبقى أهدى <span class="footer-heart">♥</span></span><span>بياناتك محفوظة على جهازك</span></footer>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="editDialog" class="edit-dialog">
+    <form id="editForm" method="dialog">
+      <div class="dialog-heading"><div><span class="section-kicker">تعديل التفاصيل</span><h2>خلّيها أوضح</h2></div><button class="icon-button dialog-close" type="button" id="closeEdit" aria-label="إغلاق"><i class="fa-solid fa-xmark"></i></button></div>
+      <label for="editTaskInput">اسم المهمة</label>
+      <input id="editTaskInput" class="dialog-input" type="text" maxlength="140" required>
+      <div class="dialog-fields">
+        <div><label for="editPriority">الأولوية</label><select id="editPriority" class="dialog-input"><option value="normal">عادية</option><option value="high">مهمة</option><option value="urgent">عاجلة</option></select></div>
+        <div><label for="editDate">الموعد</label><input id="editDate" class="dialog-input" type="date"></div>
+      </div>
+      <div class="dialog-actions"><button type="button" id="cancelEdit" class="secondary-button">إلغاء</button><button type="submit" class="add-button">حفظ التعديلات</button></div>
+    </form>
+  </dialog>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
